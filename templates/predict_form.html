@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Predict'immo Lyon</title>
+        <style> 
+            a,p,h1,body,img {
+                margin: 0;
+                padding: 0;
+            }           
+            body {
+                background-image:url(../static/lyon.jpg);
+                background-size: cover;
+                background-color: #B0E0E6;
+                background-size:110%;
+                background-repeat: no-repeat;
+                
+            }
+            div {
+                margin-top: 50px;
+                padding : 30px;
+                border-radius: 50px;
+                width: 500px;
+                background-color: white ;
+                opacity: 0.8;
+            }
+            h1 {
+                margin: 10px 0 30px 0;
+                font-size : 4035x;
+            }
+            p {
+                margin: 15px 0 10px 0;
+            }
+            .intro {
+                font-size : 20px;
+                margin-bottom: 25px;
+            }
+            input {
+                border-radius: 30px;
+                height: 20px;
+                margin-left:10px;
+            }
+            .button {
+                border-radius: 30px;
+                height: 20px;
+                margin: 20px 0 10px 0;
+                padding: 10px 20px 30px 20px;
+                font-size: 15px;
+                font-weight: 600;
+                background-color: #FF6347;
+                box-shadow: 5px 5px 5px grey;
+                border:0px solid #FFF;
+                cursor: pointer;
+                color: white;
+                letter-spacing: 0.5px;
+            }
+              .button:hover {
+                color: white;
+                background-color: #2E8B57;
+                box-shadow: -1px 2px 10px 3px rgba(0, 0, 0, 0.3) inset;
+            }
+            ::placeholder {
+                font-style: italic;
+            }
+            .resultat {
+                font-size : 20px;
+                font-style: italic;
+                font-weight: 600;
+            }
+        </style>
+    </head>
+
+    <body>
+       <center> 
+        <div>
+            <h1>Bienvenue sur <br>Predict'immo Lyon ! </h1>
+               <p class="intro"> Estimez un 1 clic le futur prix de vente d'un bien immobilier :</p>
+                <form action = "http://localhost:5000/api" method = "POST">
+
+                     <p><input type = "checkbox" name = "type_local" value="Maison"/>Maison
+                        <input type = "checkbox" name = "type_local" value="Appartement"/>Appartement</p>
+                     <p>Nombre de pièces  <input required placeholder=" ex : 3" type = "number" name = "nombre_pieces_principales" /></p>
+                     <p>Surface  <input required placeholder=" ex : 50" type = "number" name = "surface_reelle_bati" /> m<sup>2</sup></p>
+                     <p>Longitude <input placeholder=" ex : 4.85" type ="number" name = "longitude" /></p>
+                     <p>Latitude <input placeholder=" ex : 45.75" type ="number" name = "latitude" /></p>
+                     <p><input class="button" type = "submit" value = "Obtenir la prédiction" /></p>
+                 </form>
+                <!--<p class="resultat"> Le bien est estimé à :</p> -->
+         </div>
+        </center>
+    </body>
+</html>

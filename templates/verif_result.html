@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Verif'immo Lyon</title>
+        <style> 
+            a,p,h1,body,img {
+                margin: 0;
+                padding: 0;
+            }           
+            body {
+                background-image:url(../static/lyon2.jpg);
+                background-size: cover;
+                background-color: #B0E0E6;
+                background-size:110%;
+                background-repeat: no-repeat;
+                
+            }
+            div {
+                margin-top: 50px;
+                padding : 30px;
+                border-radius: 50px;
+                width: 500px;
+                height: 270px;
+                background-color: white ;
+                opacity: 0.85;
+            }
+            h1 {
+                margin: 10px 0 30px 0;
+                font-size : 4035x;
+            }
+            .intro {
+                font-size : 20px;
+                padding: 10px 0px 20px 0px;
+            }
+            .result {
+                border-radius: 30px;
+                height: 25px;
+                width: 250px;
+                margin: 20px 0 10px 0;
+                padding: 10px 0px 25px 0px;
+                font-size: 30px;
+                font-weight: 600;
+                background-color: #FF6347;
+                box-shadow: 5px 5px 5px grey;
+                color: white;
+            }
+        </style>
+    </head>
+
+    <body>
+       <center> 
+        <div>
+            <h1>Bienvenue sur <br>Verif'immo Lyon ! </h1>
+            <p class="intro"> Le bien aurait dû être vendu :</p>
+            <p class="result">{{result}} €</p>
+         </div>
+        </center>
+    </body>
+</html>
