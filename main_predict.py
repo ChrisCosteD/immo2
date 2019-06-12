@@ -42,4 +42,4 @@ def requete_prix(surface, nb_piece):
     return jsonify(dico)
 
 
-app.run(debug=True)
+#app.run(debug=True)
