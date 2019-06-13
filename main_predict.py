@@ -2,7 +2,7 @@ import class_dataframe as df_class
 import class_training as training
 from flask_api import FlaskAPI
 from flask import jsonify
-from flask import Flask, render_template, request
+from flask import render_template, request
 
 df_object = df_class.PdDataframe('df.csv')
 df_object.filter()
@@ -22,24 +22,35 @@ def student():
     return render_template('predict_form.html')
 
 
-@app.route('/api', methods=['POST', 'GET'])
+@app.route('/resultats', methods=['POST', 'GET'])
 def result():
     if request.method == 'POST':
         prixpredict = int(train_object2.multi_regression('valeur_fonciere', ['surface_reelle_bati', 'nombre_pieces_principales'],
-                                                int(request.form["surface_reelle_bati"]),
-                                                int(request.form["nombre_pieces_principales"])))
+                                                int(request.form["superficie"]),
+                                                int(request.form["nb_pieces"])))
         return render_template("predict_result.html", result=prixpredict)
 
-@app.route("/predict/<surface>,<nb_piece>/", methods=["GET"])
-def requete_prix(surface, nb_piece):
-    dico = {}
+@app.route("/api", methods=["GET", "POST"])
+
+def requete_prix():
+
+    if request.method == 'POST':
+        superficie = int(request.data.get('superficie', ''))
+        nb_piece = int(request.data.get('nb_pieces', ''))
+
+    elif request.method == 'GET':
+        superficie = int(request.args.get('superficie'))
+        nb_piece = int(request.args.get('nb_pieces'))
+
+
     prixpredict = int(train_object2.multi_regression('valeur_fonciere', ['surface_reelle_bati', 'nombre_pieces_principales'],
-                                       int(surface),
-                                       int(nb_piece)))
-    dico["surface_reelle_bati"] = surface
-    dico["nombre_pieces_principales"] = nb_piece
-    dico["result"] = prixpredict
-    return jsonify(dico)
+                                                         superficie,
+                                                         nb_piece))
+
+    prixpredict = "{:,}".format(prixpredict)
+    return jsonify({'reponse': f"Le prix du bien est de {prixpredict} euros"})
 
 
-#app.run(debug=True)
+
+app.run(debug=True)
+
