@@ -20,9 +20,12 @@ def student():
 @app.route('/resultats', methods=['POST', 'GET'])
 def result():
     if request.method == 'POST':
-        prixpredict = int(train_object2.multi_regression('valeur_fonciere', ['surface_reelle_bati', 'nombre_pieces_principales'],
-                                                int(request.form["superficie"]),
-                                                int(request.form["nb_pieces"])))
+
+        prixpredict = int(train_object2.skMultiRegression(int(request.form["superficie"]),
+                                                          int(request.form["nb_pieces"]),
+                                                          float(request.form["latitude"]),
+                                                          float(request.form["longitude"])))
+
         return render_template("predict_result.html", result=prixpredict)
 
 
@@ -47,4 +50,4 @@ def requete_prix():
 
     return jsonify({'reponse': f"Le prix du bien est de {prixpredict} euros"})
 
-#app.run(debug=True)
+app.run(debug=True)
