@@ -43,7 +43,7 @@ def requete_prix():
         lat = float(request.args.get('latitude'))
         lon = float(request.args.get('longitude'))
 
-    prixpredict = train_object2.skMultiRegression(int(surface), int(nb_piece), float(lat), float(lon))
+    prixpredict = int(train_object2.skMultiRegression(int(superficie), int(nb_piece), float(lat), float(lon)))
 
     return jsonify({'reponse': f"Le prix du bien est de {prixpredict} euros"})
 
