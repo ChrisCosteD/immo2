@@ -1,8 +1,11 @@
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
+import pandas
+import numpy as np
 from sklearn import linear_model
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
+import math
 
 
 class Training:
@@ -60,3 +63,53 @@ class Training:
         coef_piece = result_coef[1]
         #print("resul =", round(coef_surface*taille + coef_piece*nb_piece, 2), "euros")
         return coef_surface*taille + coef_piece*nb_piece
+
+    @staticmethod
+    def convertLatLonToDist(lat, lon, type):
+        if type == 'A':
+            latA = 45.762
+            lonA = 4.827
+        elif type == 'B':
+            latA = 45.757
+            lonA = 4.832
+        elif type == 'C':
+            latA = 45.771
+            lonA = 4.853
+        else:
+            print("Error convertLatLonToDist")
+            return "Error"
+        x = (lon - lonA) * math.cos((latA + lat) / 2)
+        y = lat - latA
+        d = math.sqrt((x * x) + (y * y)) * 6371
+        return d
+
+    def skMultiRegression(self, surface, nbPieces, lat, lon):
+        dataset = pandas.read_csv("df.csv")
+        dataframe = pandas.DataFrame(dataset,
+                                     columns=['valeur_fonciere', 'surface_reelle_bati', 'nombre_pieces_principales',
+                                              'distanceA', 'distanceB', 'distanceC'])
+
+        y = dataframe['valeur_fonciere']
+
+        x = dataframe[['surface_reelle_bati', 'nombre_pieces_principales', 'distanceA', 'distanceB', 'distanceC']]
+
+        xTrain, xTest, yTrain, yTest = train_test_split(x, y, test_size=1/10, random_state=0)
+
+
+        regr = linear_model.LinearRegression()
+
+        regr.fit(xTrain, yTrain)
+        myDistA = self.convertLatLonToDist(lat, lon, 'A')
+        myDistB = self.convertLatLonToDist(lat, lon, 'B')
+        myDistC = self.convertLatLonToDist(lat, lon, 'C')
+
+        print(myDistA,myDistB,myDistC)
+        predictMe = np.array([[surface, nbPieces, myDistA, myDistB, myDistC]])
+
+        result = regr.predict(predictMe)
+        print("result :", result)
+
+
+        return result[0]
+
+
