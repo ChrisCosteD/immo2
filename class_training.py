@@ -103,12 +103,9 @@ class Training:
         myDistB = self.convertLatLonToDist(lat, lon, 'B')
         myDistC = self.convertLatLonToDist(lat, lon, 'C')
 
-        print(myDistA,myDistB,myDistC)
         predictMe = np.array([[surface, nbPieces, myDistA, myDistB, myDistC]])
 
         result = regr.predict(predictMe)
-        print("result :", result)
-
 
         return result[0]
 

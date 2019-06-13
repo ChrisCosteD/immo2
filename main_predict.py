@@ -47,4 +47,4 @@ def requete_prix():
 
     return jsonify({'reponse': f"Le prix du bien est de {prixpredict} euros"})
 
-app.run(debug=True)
+#app.run(debug=True)
