@@ -30,16 +30,17 @@ def result():
                                                 int(request.form["nombre_pieces_principales"])))
         return render_template("predict_result.html", result=prixpredict)
 
-@app.route("/predict/<surface>,<nb_piece>/", methods=["GET"])
-def requete_prix(surface, nb_piece):
+@app.route("/predict/<surface>,<nb_piece>,<lat>,<lon>/", methods=["GET"])
+def requete_prix(surface, nb_piece, lat, lon):
     dico = {}
-    prixpredict = int(train_object2.multi_regression('valeur_fonciere', ['surface_reelle_bati', 'nombre_pieces_principales'],
-                                       int(surface),
-                                       int(nb_piece)))
+    #prixpredict = int(train_object2.multi_regression('valeur_fonciere', ['surface_reelle_bati', 'nombre_pieces_principales'],
+     #                                  int(surface),
+      #                                 int(nb_piece)))
+    prixpredict = train_object2.skMultiRegression(int(surface), int(nb_piece), float(lat), float(lon))
     dico["surface_reelle_bati"] = surface
     dico["nombre_pieces_principales"] = nb_piece
     dico["result"] = prixpredict
     return jsonify(dico)
 
 
-#app.run(debug=True)
+app.run(debug=True)
